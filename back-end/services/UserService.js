@@ -1,37 +1,24 @@
-const User = require("../models/UserModel");
+const UserModel = require("../models/UserModel");
 
-async function createUser(userData) {
-  const user = new User(userData);
-  await user.save();
-  return user;
-}
+exports.getAllUsers = async () => {
+  return await UserModel.find();
+};
 
-async function getUserById(userId) {
-  const user = await User.findById(userId);
-  return user;
-}
+exports.createUser = async (userData) => {
+  return await UserModel.create(userData);
+};
 
-async function updateUser(userId, userData) {
-  const user = await User.findByIdAndUpdate(userId, userData, {
+exports.getUserById = async (id) => {
+  return await UserModel.findById(id);
+};
+
+exports.updateUser = async (id, userData) => {
+  return await UserModel.findByIdAndUpdate(id, userData, {
     new: true,
+    runValidators: true,
   });
-  return user;
-}
+};
 
-async function deleteUser(userId) {
-  const user = await User.findByIdAndDelete(userId);
-  return user;
-}
-
-async function getAllUsers() {
-  const users = await User.find();
-  return users;
-}
-
-module.exports = {
-  createUser,
-  getUserById,
-  updateUser,
-  deleteUser,
-  getAllUsers,
+exports.deleteUser = async (id) => {
+  return await UserModel.findByIdAndDelete(id);
 };

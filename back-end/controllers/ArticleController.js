@@ -1,50 +1,50 @@
 const articleService = require("../services/ArticleService");
 
-const getAllArticles = async (req, res, next) => {
+const getAllArticles = async (req, res) => {
   try {
     const articles = await articleService.getAllArticles();
-    res.status(200).json(articles);
+    res.json(articles);
   } catch (err) {
-    next(err);
+    res.status(400).json({ error: err.message });
   }
 };
 
-const getArticleById = async (req, res, next) => {
+const getArticleById = async (req, res) => {
   try {
     const article = await articleService.getArticleById(req.params.id);
-    res.status(200).json(article);
+    res.json(article);
   } catch (err) {
-    next(err);
+    res.status(400).json({ error: err.message });
   }
 };
 
-const createArticle = async (req, res, next) => {
+const createArticle = async (req, res) => {
   try {
     const article = await articleService.createArticle(req.body);
     res.status(201).json(article);
   } catch (err) {
-    next(err);
+    res.status(400).json({ error: err.message });
   }
 };
 
-const updateArticle = async (req, res, next) => {
+const updateArticle = async (req, res) => {
   try {
     const updatedArticle = await articleService.updateArticle(
       req.params.id,
       req.body
     );
-    res.status(200).json(updatedArticle);
+    res.json(updatedArticle);
   } catch (err) {
-    next(err);
+    res.status(400).json({ error: err.message });
   }
 };
 
-const deleteArticle = async (req, res, next) => {
+const deleteArticle = async (req, res) => {
   try {
     const deletedArticle = await articleService.deleteArticle(req.params.id);
-    res.status(200).json(deletedArticle);
+    res.json(deletedArticle);
   } catch (err) {
-    next(err);
+    res.status(400).json({ error: err.message });
   }
 };
 
