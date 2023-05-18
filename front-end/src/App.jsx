@@ -1,11 +1,11 @@
 import React from "react";
-import HomePage from "./pages/HomePage/HomePage";
+import AppRouter from "./routes/AppRouter";
 
 const App = () => {
   return (
-    <div>
-      <HomePage />
-    </div>
+    <>
+      <AppRouter />
+    </>
   );
 };
 

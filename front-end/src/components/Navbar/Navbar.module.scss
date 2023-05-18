@@ -1,15 +1,13 @@
 .navbar {
   display: flex;
   justify-content: flex-end;
-  padding: 10px;
+  padding: 24px 0;
+  gap: 32px;
+  margin-bottom: 100px;
 }
 
 .navbar__link {
   color: #fff;
   margin-left: 10px;
   text-decoration: none;
-}
-
-.navbar__link:last-child {
-  margin-left: 20px;
 }

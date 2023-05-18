@@ -11,8 +11,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #000000;
   color: #ffffff;
+  background-color: black;
+}
+
+footer {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(25px) !important;
 }
 
 code {
