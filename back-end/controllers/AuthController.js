@@ -5,6 +5,10 @@ exports.registerUser = async (req, res, next) => {
     const newUser = await AuthService.registerUser(req.body);
     return res.status(201).json({ user: newUser });
   } catch (error) {
+    if (error.code === 11000 && error.keyPattern && error.keyPattern.email) {
+      return res.status(400).json({ message: "Email address already in use" });
+    }
+
     return next(error);
   }
 };

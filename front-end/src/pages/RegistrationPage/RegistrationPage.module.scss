@@ -14,7 +14,7 @@
   justify-content: space-around;
   background-color: rgba(255, 255, 255, 0.1);
   width: 560px;
-  height: 80%;
+  height: 60%;
   border-radius: 15px;
   padding: 15px;
 }
@@ -77,4 +77,10 @@
     color: #fff;
     transition: all ease-in-out 0.3s;
   }
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 8px;
 }

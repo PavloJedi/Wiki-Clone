@@ -3,62 +3,44 @@ import { Link, useNavigate } from "react-router-dom";
 import { authService } from "../../services/authService";
 
 //styles
-import styles from "./RegistrationPage.module.scss";
+import styles from "./LoginPage.module.scss";
 
-const RegistrationPage = () => {
-  const history = useNavigate();
+const LoginPage = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState({
-    name: "",
     email: "",
     password: "",
   });
-
-  const [error, setError] = useState("");
 
   const handleChange = ({ target: { name, value } }) => {
     setData({ ...data, [name]: value });
   };
 
-  const handleRegistration = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
       const user = {
-        name: data.name,
         email: data.email,
         password: data.password,
       };
-      const response = await authService.registration(user);
+      const response = await authService.login(user);
       console.log(response);
-      history.push("/login");
-      setError("");
+      navigate("/");
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        setError(error.response.data.message);
-        console.log(error.response.data.message);
-      } else {
-        setError(error);
-      }
+      console.log(error);
     }
   };
 
   return (
-    <div className={styles.contentWrap}>
+    <div className={styles.wrap}>
       <div className={styles.blocksWrap}>
-        <form onSubmit={handleRegistration}>
+        <div className={styles.topWrap}>
+          <h1>Let's Get Started</h1>
+          <p>Sign in to Wiki-Clone</p>
+        </div>
+        <form onSubmit={handleLogin}>
           <div className={styles.formControl}>
-            <input
-              type="text"
-              name="name"
-              placeholder="Full name"
-              className={styles.inputField}
-              value={data.name}
-              onChange={handleChange}
-            />
             <input
               type="email"
               name="email"
@@ -76,15 +58,14 @@ const RegistrationPage = () => {
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className={styles.registerButton}>
-            Register
+          <button type="submit" className={styles.loginButton}>
+            Sign in
           </button>
         </form>
-        {error && <p className={styles.error}>{error}</p>}
         <div className={styles.bottomWrap}>
-          <p>Already have an account?</p>
-          <Link className={styles.link} to="/login">
-            <button className={styles.loginButton}>Sign In</button>
+          <p>Don't have an account?</p>
+          <Link className={styles.link} to="/">
+            <span>Sign Up</span>
           </Link>
         </div>
       </div>
@@ -92,4 +73,4 @@ const RegistrationPage = () => {
   );
 };
 
-export default RegistrationPage;
+export default LoginPage;
