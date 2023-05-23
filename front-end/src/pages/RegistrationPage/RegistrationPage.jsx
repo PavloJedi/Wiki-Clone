@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { authService } from "../../services/authService";
 
+// React-icons library
+import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+
 //styles
 import styles from "./RegistrationPage.module.scss";
 
@@ -49,32 +52,42 @@ const RegistrationPage = () => {
   return (
     <div className={styles.contentWrap}>
       <div className={styles.blocksWrap}>
-        <form onSubmit={handleRegistration}>
+        <h2 className={styles.registerTitle}>Register on Wiki-Clone</h2>
+        <form onSubmit={handleRegistration} style={{ width: "70%" }}>
           <div className={styles.formControl}>
-            <input
-              type="text"
-              name="name"
-              placeholder="Full name"
-              className={styles.inputField}
-              value={data.name}
-              onChange={handleChange}
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              className={styles.inputField}
-              value={data.email}
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              className={styles.inputField}
-              value={data.password}
-              onChange={handleChange}
-            />
+            <div className={styles.inputField}>
+              <input
+                type="text"
+                name="name"
+                placeholder="Full name"
+                className={styles.inputField}
+                value={data.name}
+                onChange={handleChange}
+              />
+              <FaUser className={styles.icon} />
+            </div>
+            <div className={styles.inputField}>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                className={styles.inputField}
+                value={data.email}
+                onChange={handleChange}
+              />
+              <FaEnvelope className={styles.icon} />
+            </div>
+            <div className={styles.inputField}>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                className={styles.inputField}
+                value={data.password}
+                onChange={handleChange}
+              />
+              <FaLock className={styles.icon} />
+            </div>
           </div>
           <button type="submit" className={styles.registerButton}>
             Register

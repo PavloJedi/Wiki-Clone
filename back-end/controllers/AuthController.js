@@ -1,7 +1,16 @@
+const registerValidation = require("../helpers/validation");
 const AuthService = require("../services/AuthService");
+const { getUserById } = require("../services/UserService");
 
 exports.registerUser = async (req, res, next) => {
   try {
+    const { error } = registerValidation(req.body);
+    await getUserById(req.body.id);
+
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
+
     const newUser = await AuthService.registerUser(req.body);
     return res.status(201).json({ user: newUser });
   } catch (error) {

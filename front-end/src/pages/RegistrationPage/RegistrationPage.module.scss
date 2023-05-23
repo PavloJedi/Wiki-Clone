@@ -22,16 +22,27 @@
 .formControl {
   width: 100%;
   margin-bottom: 15px;
+  position: relative;
 }
 
 .inputField {
-  width: 80%;
+  width: 100%;
   padding: 10px;
   font-size: 16px;
   border: none;
   border-radius: 5px;
   outline: none;
   margin-bottom: 15px;
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-90%);
+  pointer-events: none;
+  color: #a1a4b5;
 }
 
 .registerButton {
@@ -83,4 +94,10 @@
   color: red;
   font-size: 14px;
   margin-top: 8px;
+}
+
+.registerTitle {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
 }
