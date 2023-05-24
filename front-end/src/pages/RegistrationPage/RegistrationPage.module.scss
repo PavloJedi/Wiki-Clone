@@ -25,7 +25,7 @@
   position: relative;
 }
 
-.inputField {
+.input {
   width: 100%;
   padding: 10px;
   font-size: 16px;
@@ -38,11 +38,24 @@
 
 .icon {
   position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-90%);
+  bottom: 60%;
+  left: 13px;
+  transform: translateY(30%);
   pointer-events: none;
   color: #a1a4b5;
+}
+
+.passwordToggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #a1a4b5;
+  outline: none;
+  font-size: 20px;
 }
 
 .registerButton {
@@ -100,4 +113,16 @@
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 16px;
+}
+
+.errorMessage {
+  display: flex;
+  align-items: center;
+  color: red;
+  font-size: 14px;
+  margin-top: 8px;
+
+  svg {
+    margin-right: 5px;
+  }
 }

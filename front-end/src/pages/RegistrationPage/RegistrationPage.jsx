@@ -1,30 +1,78 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { authService } from "../../services/authService";
-
-// React-icons library
-import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
-
-//styles
+import {
+  FaUser,
+  FaEnvelope,
+  FaLock,
+  FaExclamationTriangle,
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
+import { REGEX_EMAIL, REGEX_NAME, REGEX_PASSWORD } from "../../helpers/regex";
+import Loader from "../../components/Loader/Loader";
 import styles from "./RegistrationPage.module.scss";
 
 const RegistrationPage = () => {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const [data, setData] = useState({
     name: "",
     email: "",
     password: "",
   });
+  const [hasError, setHasError] = useState({
+    hasMessageError: false,
+    hasNameError: false,
+    hasEmailError: false,
+    hasPasswordError: false,
+  });
+  const [showPassword, setShowPassword] = useState({
+    current: false,
+    confirm: false,
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [error, setError] = useState("");
+  const handleMouseDownPassword = (e) => e.preventDefault();
 
-  const handleChange = ({ target: { name, value } }) => {
-    setData({ ...data, [name]: value });
+  const handleClickShowPassword = (name, value) => {
+    setShowPassword({ ...showPassword, [name]: value });
   };
 
-  const handleRegistration = async (e) => {
-    e.preventDefault();
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
 
+  const isDisabledBtn = useMemo(
+    () =>
+      !data.name.trim().length ||
+      !data.email.trim().length ||
+      !data.password.trim().length,
+    [data.name, data.email, data.password]
+  );
+
+  const checkValidation = () => {
+    const errors = {
+      hasMessageError: false,
+      hasNameError: !REGEX_NAME.test(data.name),
+      hasEmailError: !REGEX_EMAIL.test(data.email),
+      hasPasswordError: !REGEX_PASSWORD.test(data.password),
+    };
+
+    setHasError((prev) => ({ ...prev, ...errors }));
+
+    return Object.values(errors).includes(true);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!checkValidation()) {
+      setIsLoading(true);
+      await handleRegistration();
+      setIsLoading(false);
+    }
+  };
+
+  const handleRegistration = async () => {
     try {
       const user = {
         name: data.name,
@@ -33,74 +81,128 @@ const RegistrationPage = () => {
       };
       const response = await authService.registration(user);
       console.log(response);
-      history.push("/login");
-      setError("");
+      navigate.push("/login");
     } catch (error) {
       if (
         error.response &&
         error.response.data &&
         error.response.data.message
       ) {
-        setError(error.response.data.message);
         console.log(error.response.data.message);
       } else {
-        setError(error);
+        console.log(error);
       }
     }
   };
 
   return (
     <div className={styles.contentWrap}>
-      <div className={styles.blocksWrap}>
-        <h2 className={styles.registerTitle}>Register on Wiki-Clone</h2>
-        <form onSubmit={handleRegistration} style={{ width: "70%" }}>
-          <div className={styles.formControl}>
-            <div className={styles.inputField}>
-              <input
-                type="text"
-                name="name"
-                placeholder="Full name"
-                className={styles.inputField}
-                value={data.name}
-                onChange={handleChange}
-              />
-              <FaUser className={styles.icon} />
+      {isLoading ? (
+        <Loader isAuthPage />
+      ) : (
+        <div className={styles.blocksWrap}>
+          <h2 className={styles.registerTitle}>Register on Wiki-Clone</h2>
+          <form onSubmit={handleSubmit} style={{ width: "70%" }}>
+            <div className={styles.formControl}>
+              <div className={styles.inputField}>
+                <input
+                  className={`${styles.input} ${
+                    hasError.hasNameError ? styles.error : ""
+                  }`}
+                  type="text"
+                  name="name"
+                  value={data.name}
+                  onChange={handleChange}
+                  placeholder="Full Name"
+                  autoComplete="off"
+                  required
+                />
+                <FaUser className={styles.icon} />
+              </div>
+              {hasError.hasNameError && (
+                <div className={styles.errorMessage}>
+                  <FaExclamationTriangle />
+                  <span>Please enter a valid name</span>
+                </div>
+              )}
             </div>
-            <div className={styles.inputField}>
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                className={styles.inputField}
-                value={data.email}
-                onChange={handleChange}
-              />
-              <FaEnvelope className={styles.icon} />
+            <div className={styles.formControl}>
+              <div className={styles.inputField}>
+                <input
+                  className={`${styles.input} ${
+                    hasError.hasEmailError ? styles.error : ""
+                  }`}
+                  type="text"
+                  name="email"
+                  value={data.email}
+                  onChange={handleChange}
+                  placeholder="Email"
+                  autoComplete="off"
+                  required
+                />
+                <FaEnvelope className={styles.icon} />
+              </div>
+
+              {hasError.hasEmailError && (
+                <div className={styles.errorMessage}>
+                  <FaExclamationTriangle />
+                  <span>Please enter a valid email address</span>
+                </div>
+              )}
             </div>
-            <div className={styles.inputField}>
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                className={styles.inputField}
-                value={data.password}
-                onChange={handleChange}
-              />
-              <FaLock className={styles.icon} />
+            <div className={styles.formControl}>
+              <div className={styles.inputField}>
+                <input
+                  className={`${styles.input} ${
+                    hasError.hasEmailError ? styles.error : ""
+                  }`}
+                  type={showPassword.current ? "text" : "password"}
+                  name="password"
+                  value={data.password}
+                  onChange={handleChange}
+                  placeholder="Password"
+                  autoComplete="off"
+                  required
+                />
+                <FaLock className={styles.icon} />
+                <button
+                  className={styles.passwordToggle}
+                  onClick={() =>
+                    handleClickShowPassword("current", !showPassword.current)
+                  }
+                  onMouseDown={handleMouseDownPassword}
+                  type="button"
+                >
+                  {showPassword.current ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
+              {hasError.hasPasswordError && (
+                <div className={styles.errorMessage}>
+                  <FaExclamationTriangle />
+                  <span>
+                    Password must contain at least 8 characters including at
+                    least one uppercase letter, one lowercase letter, one
+                    number, and one special character.
+                  </span>
+                </div>
+              )}
             </div>
+            <button
+              type="submit"
+              className={styles.registerButton}
+              disabled={isDisabledBtn}
+            >
+              Register
+            </button>
+          </form>
+          <div className={styles.bottomWrap}>
+            <p>Already have an account?</p>
+            <Link className={styles.link} to="/login">
+              <button className={styles.loginButton}>Sign In</button>
+            </Link>
           </div>
-          <button type="submit" className={styles.registerButton}>
-            Register
-          </button>
-        </form>
-        {error && <p className={styles.error}>{error}</p>}
-        <div className={styles.bottomWrap}>
-          <p>Already have an account?</p>
-          <Link className={styles.link} to="/login">
-            <button className={styles.loginButton}>Sign In</button>
-          </Link>
         </div>
-      </div>
+      )}
     </div>
   );
 };
