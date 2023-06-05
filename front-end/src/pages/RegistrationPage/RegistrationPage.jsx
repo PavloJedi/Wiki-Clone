@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { authService } from "../../services/authService";
+
+//icons
 import {
   FaUser,
   FaEnvelope,
@@ -9,27 +11,32 @@ import {
   FaEye,
   FaEyeSlash,
 } from "react-icons/fa";
+
 import { REGEX_EMAIL, REGEX_NAME, REGEX_PASSWORD } from "../../helpers/regex";
 import Loader from "../../components/Loader/Loader";
 import styles from "./RegistrationPage.module.scss";
 
 const RegistrationPage = () => {
   const navigate = useNavigate();
+
   const [data, setData] = useState({
     name: "",
     email: "",
     password: "",
   });
+
   const [hasError, setHasError] = useState({
     hasMessageError: false,
     hasNameError: false,
     hasEmailError: false,
     hasPasswordError: false,
   });
+
   const [showPassword, setShowPassword] = useState({
     current: false,
     confirm: false,
   });
+
   const [isLoading, setIsLoading] = useState(false);
 
   const handleMouseDownPassword = (e) => e.preventDefault();
@@ -106,9 +113,7 @@ const RegistrationPage = () => {
             <div className={styles.formControl}>
               <div className={styles.inputField}>
                 <input
-                  className={`${styles.input} ${
-                    hasError.hasNameError ? styles.error : ""
-                  }`}
+                  className={styles.input}
                   type="text"
                   name="name"
                   value={data.name}
@@ -129,9 +134,7 @@ const RegistrationPage = () => {
             <div className={styles.formControl}>
               <div className={styles.inputField}>
                 <input
-                  className={`${styles.input} ${
-                    hasError.hasEmailError ? styles.error : ""
-                  }`}
+                  className={styles.input}
                   type="text"
                   name="email"
                   value={data.email}
@@ -153,9 +156,7 @@ const RegistrationPage = () => {
             <div className={styles.formControl}>
               <div className={styles.inputField}>
                 <input
-                  className={`${styles.input} ${
-                    hasError.hasEmailError ? styles.error : ""
-                  }`}
+                  className={styles.input}
                   type={showPassword.current ? "text" : "password"}
                   name="password"
                   value={data.password}
@@ -180,9 +181,7 @@ const RegistrationPage = () => {
                 <div className={styles.errorMessage}>
                   <FaExclamationTriangle />
                   <span>
-                    Password must contain at least 8 characters including at
-                    least one uppercase letter, one lowercase letter, one
-                    number, and one special character.
+                    Password: 8-10 letters, 1 uppercase, 1 lowercase, 1 number
                   </span>
                 </div>
               )}

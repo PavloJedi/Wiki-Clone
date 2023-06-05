@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const UserModel = require("../models/UserModel");
+const { generateToken } = require("../config/passport-config");
 
 // Configure local strategy
 passport.use(
@@ -35,16 +36,35 @@ exports.registerUser = async (userData) => {
   return newUser;
 };
 
-exports.authenticateUser = (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    if (err) return next(err);
-    if (!user) return res.status(401).json({ message: info.message });
-    req.logIn(user, (err) => {
-      if (err) return next(err);
-      return res.status(200).json({ user });
-    });
-  })(req, res, next);
+exports.loginUser = async (email, password) => {
+  try {
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const isPasswordValid = await comparePasswords(password, user.password);
+
+    if (!isPasswordValid) {
+      throw new Error("Invalid password");
+    }
+
+    const token = generateToken(user);
+
+    return { user, token };
+  } catch (error) {
+    throw error;
+  }
 };
+
+const comparePasswords = (pass1, pass2) =>
+  new Promise((resolve, reject) => {
+    bcrypt.compare(pass1, pass2, (err, result) => {
+      if (err) return reject(err);
+      return resolve(result);
+    });
+  });
 
 exports.getCurrentUser = async (userId) => {
   const user = await UserModel.findById(userId);

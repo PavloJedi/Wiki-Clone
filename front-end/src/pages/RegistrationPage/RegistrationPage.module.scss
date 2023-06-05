@@ -25,31 +25,33 @@
   position: relative;
 }
 
+.inputField {
+  position: relative;
+}
+
 .input {
   width: 100%;
-  padding: 10px;
+  padding: 10px 30px 10px 40px;
   font-size: 16px;
   border: none;
   border-radius: 5px;
   outline: none;
   margin-bottom: 15px;
-  position: relative;
 }
 
 .icon {
   position: absolute;
-  bottom: 60%;
   left: 13px;
-  transform: translateY(30%);
+  bottom: 50%;
   pointer-events: none;
   color: #a1a4b5;
 }
 
 .passwordToggle {
   position: absolute;
-  top: 50%;
+  top: 43%;
   right: 10px;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
   background: none;
   border: none;
   cursor: pointer;
@@ -68,13 +70,10 @@
   outline: none;
   transition: all ease-in-out 0.3s;
   background-color: #fff;
-  color: #000000;
 }
 
 .registerButton:hover {
   transition: all ease-in-out 0.3s;
-  background-color: rgba(7, 7, 7, 0.737);
-  color: #fff;
 }
 
 .bottomWrap {
@@ -101,12 +100,6 @@
     color: #fff;
     transition: all ease-in-out 0.3s;
   }
-}
-
-.error {
-  color: red;
-  font-size: 14px;
-  margin-top: 8px;
 }
 
 .registerTitle {

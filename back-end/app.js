@@ -7,6 +7,7 @@ const app = express();
 const port = process.env.PORT;
 
 //Middlewares
+const authentication = require("./middlewares/authentication");
 const cors = require("./middlewares/cors");
 const sessionMiddleware = require("./middlewares/session");
 
@@ -22,11 +23,11 @@ app.use(sessionMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-require("./config/passport-config")(passport);
+passportConfig.initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/api", appRouter);
+app.use("/api", authentication, appRouter);
 app.use("/auth", authRouter);
 app.use((req, res, next) => {
   res.status(404).json({ message: "Route not found" });

@@ -30,7 +30,8 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const updatedUser = await userService.updateUser(req.params.id, req.body);
-    res.json(updatedUser);
+    const token = createToken(user.email);
+    return res.status(200).json({ token, updatedUser });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

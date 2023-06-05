@@ -22,8 +22,17 @@ exports.registerUser = async (req, res, next) => {
   }
 };
 
-exports.loginUser = (req, res, next) => {
-  AuthService.authenticateUser(req, res, next);
+exports.loginUser = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const { user, token } = await AuthService.loginUser(email, password);
+    if (!user) {
+      return res.status(400).json({ message: "User was not found!" });
+    }
+    return res.status(200).json({ user, token });
+  } catch (error) {
+    return next(error);
+  }
 };
 
 exports.getCurrentUser = async (req, res, next) => {
