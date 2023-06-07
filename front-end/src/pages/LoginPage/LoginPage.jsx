@@ -57,7 +57,7 @@ const LoginPage = () => {
       if (token) {
         await fetchUser();
       }
-      navigate("/");
+      navigate("/app");
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

@@ -1,14 +1,15 @@
 import React, { Suspense, useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-// Private route
+//private route
 import PrivateRoute from "./PrivateRoute";
 
-//Context
+//context
 import { CurrentUserContext } from "../context/AppProvider";
 
 //pages
 import HomePage from "../pages/HomePage/HomePage";
+import ArticlePage from "../pages/ArticlePage/ArticlePage";
 import RegistrationPage from "../pages/RegistrationPage/RegistrationPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import NotFound from "../pages/NotFound/NotFoundPage";
@@ -22,15 +23,12 @@ const AppRouter = () => {
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
+        <Route index path="/app" element={<HomePage />} />
         <Route
-          index
-          element={isAuthenticated ? <Navigate to="/app" /> : <HomePage />}
-        />
-        <Route
-          path="/app"
+          path="/app/articles"
           element={
             <PrivateRoute>
-              <HomePage />
+              <ArticlePage />
             </PrivateRoute>
           }
         />
