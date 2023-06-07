@@ -1,5 +1,11 @@
-import React, { Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { Suspense, useContext } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+
+// Private route
+import PrivateRoute from "./PrivateRoute";
+
+//Context
+import { CurrentUserContext } from "../context/AppProvider";
 
 //pages
 import HomePage from "../pages/HomePage/HomePage";
@@ -11,10 +17,23 @@ import NotFound from "../pages/NotFound/NotFoundPage";
 import Loader from "../components/Loader/Loader";
 
 const AppRouter = () => {
+  const { isAuthenticated } = useContext(CurrentUserContext);
+
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route
+          index
+          element={isAuthenticated ? <Navigate to="/app" /> : <HomePage />}
+        />
+        <Route
+          path="/app"
+          element={
+            <PrivateRoute>
+              <HomePage />
+            </PrivateRoute>
+          }
+        />
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<NotFound />} />
