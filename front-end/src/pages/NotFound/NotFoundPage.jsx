@@ -10,7 +10,7 @@ import styles from "./NotFound.module.scss";
 const NotFound = () => {
   const navigate = useNavigate();
   function handleClick() {
-    navigate("/");
+    navigate("/app");
   }
 
   return (

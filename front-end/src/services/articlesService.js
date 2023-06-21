@@ -18,3 +18,14 @@ export const deleteArticle = async (id) => {
   const { data } = await API.delete(`/api/articles/${id}`);
   return data;
 };
+
+export const searchArticles = async (query) => {
+  try {
+    const response = await API.get("/api/articles/search", {
+      params: { q: query },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to search articles: " + error.message);
+  }
+};

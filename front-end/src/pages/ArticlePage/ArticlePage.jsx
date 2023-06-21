@@ -6,7 +6,7 @@ const ArticlePage = () => {
   const article = useSelector((state) => state.articles.articles);
 
   return (
-    <div style={{ marginBottom: "15px" }}>
+    <div style={{ marginBottom: "15px", backgroundColor: "red" }}>
       <div key={article.id}>
         <h3>{article.title}</h3>
         <p>{article.text}</p>

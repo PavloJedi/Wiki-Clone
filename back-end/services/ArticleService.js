@@ -22,3 +22,8 @@ exports.updateArticle = async (id, articleData) => {
 exports.deleteArticle = async (id) => {
   return await ArticleModel.findByIdAndDelete(id);
 };
+
+exports.searchArticles = async (query) => {
+  return await ArticleModel.find({ title: { $regex: query, $options: 'i' } });
+};
+

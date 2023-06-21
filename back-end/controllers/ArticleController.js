@@ -48,10 +48,22 @@ const deleteArticle = async (req, res) => {
   }
 };
 
+const searchArticles = async (req, res) => {
+  try {
+    const query = req.query.q; 
+    const articles = await articleService.searchArticles(query);
+    res.json(articles);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
 module.exports = {
   getAllArticles,
   getArticleById,
   createArticle,
   updateArticle,
   deleteArticle,
+  searchArticles
 };
