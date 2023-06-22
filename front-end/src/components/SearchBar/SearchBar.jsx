@@ -14,9 +14,14 @@ const SearchBar = () => {
 
   useEffect(() => {
     if (searchQuery !== "") {
-      searchArticles(searchQuery).then(setSuggestions, (error) => {
-        console.error("Failed to search articles:", error);
-      });
+      searchArticles(searchQuery).then(
+        setSuggestions,
+        console.log(suggestions),
+
+        (error) => {
+          console.error("Failed to search articles:", error);
+        }
+      );
     }
   }, [searchQuery]);
 
@@ -29,7 +34,7 @@ const SearchBar = () => {
   };
 
   const onSuggestionSelected = (_, { suggestion }) => {
-    navigate(`/article/${suggestion.id}`);
+    navigate(`/app/article/${suggestion._id}`);
   };
 
   const getSuggestionValue = (suggestion) => suggestion.title;

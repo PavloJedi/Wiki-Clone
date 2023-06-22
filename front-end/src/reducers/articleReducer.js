@@ -1,4 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getArticles } from "../services/articlesService";  
+
+export const fetchArticles = createAsyncThunk("articles/fetchAll", async () => {
+  const response = await getArticles();
+  return response; 
+});
 
 const initialState = {
   articles: [],
@@ -27,6 +33,11 @@ const articleSlice = createSlice({
       }
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchArticles.fulfilled, (state, action) => {
+      state.articles = action.payload;
+    });
+  }
 });
 
 export const { addArticle, editArticle, deleteArticle } = articleSlice.actions;

@@ -29,3 +29,21 @@ export const searchArticles = async (query) => {
     throw new Error("Failed to search articles: " + error.message);
   }
 };
+
+export const getArticleById = async (id) => {
+  try {
+    const response = await API.get(`/api/articles/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch article: " + error.message);
+  }
+};
+
+export const getArticles = async () => {
+  try {
+    const response = await API.get("/api/articles");
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch articles: " + error.message);
+  }
+};

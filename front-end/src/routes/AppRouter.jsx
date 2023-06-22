@@ -23,7 +23,7 @@ const AppRouter = () => {
         <Route path="/app" element={<PrivateRoute />}>
           <Route element={<Layout />}>
             <Route index element={<HomePage />} />
-            <Route path="article/:id" element={ArticlePage} />
+            <Route path="article/:id" element={<ArticlePage />} />
             <Route path="add-article" element={<AddArticleForm />} />
           </Route>
         </Route>
