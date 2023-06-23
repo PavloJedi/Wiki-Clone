@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Autosuggest from "react-autosuggest";
+import Select from "react-select";
 import { searchArticles } from "../../services/articlesService";
 
-//styles
+// Styles
 import styles from "./SearchBar.module.scss";
 import { FaSearch, FaKeyboard } from "react-icons/fa";
 
@@ -15,44 +15,70 @@ const SearchBar = () => {
   useEffect(() => {
     if (searchQuery !== "") {
       searchArticles(searchQuery).then(
-        setSuggestions,
-        console.log(suggestions),
-
+        (articles) => {
+          setSuggestions(articles);
+        },
         (error) => {
           console.error("Failed to search articles:", error);
         }
       );
+    } else {
+      setSuggestions([]);
     }
   }, [searchQuery]);
 
-  const inputProps = {
-    placeholder: "Search",
-    value: searchQuery,
-    onChange: (_, { newValue }) => {
-      setSearchQuery(newValue);
-    },
+  const handleInputChange = (newValue) => {
+    setSearchQuery(newValue);
   };
 
-  const onSuggestionSelected = (_, { suggestion }) => {
-    navigate(`/app/article/${suggestion._id}`);
+  const handleSelect = (selectedOption) => {
+    if (selectedOption) {
+      navigate(`/app/article/${selectedOption._id}`);
+    }
   };
 
-  const getSuggestionValue = (suggestion) => suggestion.title;
+  const formatOptionLabel = ({ title }) => <div>{title}</div>;
 
-  const renderSuggestion = (suggestion) => <div>{suggestion.title}</div>;
+  const customStyles = {
+    option: (provided) => ({
+      ...provided,
+      backgroundColor: "transparent",
+      color: "black",
+    }),
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: "transparent",
+      border: "none",
+      boxShadow: "none",
+    }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+      color: "black",
+      backgroundColor: "transparent",
+    }),
+    input: (provided) => ({
+      ...provided,
+      color: "white",
+    }),
+  };
 
   return (
     <div className={styles.searchBar}>
       <div className={styles.searchBar__inputContainer}>
         <FaSearch className={styles.searchBar__icon} />
-        <Autosuggest
-          suggestions={suggestions}
-          onSuggestionsFetchRequested={({ value }) => setSearchQuery(value)}
-          onSuggestionsClearRequested={() => setSuggestions([])}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          inputProps={inputProps}
-          onSuggestionSelected={onSuggestionSelected}
+        <Select
+          options={suggestions}
+          inputValue={searchQuery}
+          onInputChange={handleInputChange}
+          onChange={handleSelect}
+          getOptionLabel={(option) => option.title}
+          getOptionValue={(option) => option._id}
+          formatOptionLabel={formatOptionLabel}
+          placeholder="Search"
+          isClearable
+          isSearchable
+          className={styles.searchBar__input}
+          styles={customStyles}
         />
         <FaKeyboard className={styles.searchBar__icon} />
       </div>

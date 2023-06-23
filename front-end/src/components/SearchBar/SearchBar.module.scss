@@ -12,11 +12,16 @@
     .searchBar__input {
       flex: 1;
       border: none;
-      padding: 12px 0;
+      font-size: 18px;
       background-color: transparent;
       width: 555px;
-      height: 48px;
+      height: 37px;
       color: white;
+    }
+
+    .suggestionsContainer {
+      list-style: none !important;
+      padding: 0 10px;
     }
 
     .searchBar__icon {
