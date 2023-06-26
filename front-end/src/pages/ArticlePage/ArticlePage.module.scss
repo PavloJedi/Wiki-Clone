@@ -1,0 +1,28 @@
+.articleBox {
+  padding-top: 20px;
+  width: 100%;
+}
+
+.articleWrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.articleTitle {
+  margin-bottom: 20px;
+}
+
+.icons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  flex-direction: column;
+  align-items: end;
+
+  svg {
+    cursor: pointer;
+  }
+}

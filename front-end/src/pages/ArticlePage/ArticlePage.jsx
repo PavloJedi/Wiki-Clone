@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { getArticleById } from "../../services/articlesService";
+import {
+  getArticleById,
+  deleteArticle,
+  updateArticle,
+} from "../../services/articlesService";
 import { useParams } from "react-router-dom";
+
+//styles
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import styles from "./ArticlePage.module.scss";
 
 const ArticlePage = () => {
@@ -27,13 +34,32 @@ const ArticlePage = () => {
     return <div>Loading...</div>;
   }
 
+  const handleEdit = () => {
+    // navigate(`/edit-article/${article.id}`);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteArticle(article.id);
+      // navigate("/articles"); // Or any other page you'd like to navigate to
+    } catch (error) {
+      console.error("Failed to delete article:", error);
+    }
+  };
+
   return (
-    <div style={{ marginBottom: "15px", backgroundColor: "red" }}>
+    <div className={styles.articleBox}>
       {article ? (
-        <div key={article.id}>
-          <h3>{article.title}</h3>
-          <p>{article.content}</p>
-        </div>
+        <>
+          <div className={styles.icons}>
+            <FaEdit onClick={handleEdit} />
+            <FaTrashAlt onClick={handleDelete} />
+          </div>
+          <div key={article.id} className={styles.articleWrap}>
+            <h3 className={styles.articleTitle}>{article.title}</h3>
+            <p>{article.content}</p>
+          </div>
+        </>
       ) : (
         <div>Article not found</div>
       )}
