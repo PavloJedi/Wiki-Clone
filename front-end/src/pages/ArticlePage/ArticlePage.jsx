@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react";
-import {
-  getArticleById,
-  deleteArticle,
-  updateArticle,
-} from "../../services/articlesService";
+import React, { useEffect, useState, useContext } from "react";
+import { getArticleById } from "../../services/articlesService";
 import { useParams } from "react-router-dom";
-
-//styles
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 import styles from "./ArticlePage.module.scss";
+import { CurrentUserContext } from "../../context/AppProvider";
+import EditArticleForm from "../../components/Articles/EditArticleForm/EditArticleForm";
+import DeleteArticleForm from "../../components/Articles/DeleteArticleForm/DeleteArticleForm";
 
 const ArticlePage = () => {
+  const { isAuthenticated } = useContext(CurrentUserContext);
   const { id: idString } = useParams();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -26,42 +25,48 @@ const ArticlePage = () => {
         setLoading(false);
       }
     };
-
     fetchArticle();
   }, [idString]);
+
+  const handleEdit = () => {
+    setEditing(true);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
   }
-
-  const handleEdit = () => {
-    // navigate(`/edit-article/${article.id}`);
-  };
-
-  const handleDelete = async () => {
-    try {
-      await deleteArticle(article.id);
-      // navigate("/articles"); // Or any other page you'd like to navigate to
-    } catch (error) {
-      console.error("Failed to delete article:", error);
-    }
-  };
 
   return (
     <div className={styles.articleBox}>
       {article ? (
         <>
           <div className={styles.icons}>
-            <FaEdit onClick={handleEdit} />
-            <FaTrashAlt onClick={handleDelete} />
+            {isAuthenticated && (
+              <>
+                <FaEdit onClick={handleEdit} />
+                <DeleteArticleForm
+                  idString={idString}
+                  setArticle={setArticle}
+                />
+              </>
+            )}
           </div>
-          <div key={article.id} className={styles.articleWrap}>
-            <h3 className={styles.articleTitle}>{article.title}</h3>
-            <p>{article.content}</p>
-          </div>
+          {editing ? (
+            <EditArticleForm
+              idString={idString}
+              article={article}
+              setEditing={setEditing}
+              setArticle={setArticle}
+            />
+          ) : (
+            <div key={article.id} className={styles.articleWrap}>
+              <h3 className={styles.articleTitle}>{article.title}</h3>
+              <p>{article.content}</p>
+            </div>
+          )}
         </>
       ) : (
-        <div>Article not found</div>
+        <div style={{ textAlign: "center" }}>Article not found</div>
       )}
     </div>
   );

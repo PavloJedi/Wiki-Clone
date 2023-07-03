@@ -1,6 +1,6 @@
 const articleService = require("../services/ArticleService");
 
-const getAllArticles = async (req, res) => {
+exports.getAllArticles = async (req, res) => {
   try {
     const articles = await articleService.getAllArticles();
     res.json(articles);
@@ -9,7 +9,7 @@ const getAllArticles = async (req, res) => {
   }
 };
 
-const getArticleById = async (req, res) => {
+exports.getArticleById = async (req, res) => {
   try {
     const article = await articleService.getArticleById(req.params.id);
     res.json(article);
@@ -18,7 +18,7 @@ const getArticleById = async (req, res) => {
   }
 };
 
-const createArticle = async (req, res) => {
+exports.createArticle = async (req, res) => {
   try {
     const article = await articleService.createArticle(req.body);
     res.status(201).json(article);
@@ -27,7 +27,7 @@ const createArticle = async (req, res) => {
   }
 };
 
-const updateArticle = async (req, res) => {
+exports.updateArticle = async (req, res) => {
   try {
     const updatedArticle = await articleService.updateArticle(
       req.params.id,
@@ -39,7 +39,7 @@ const updateArticle = async (req, res) => {
   }
 };
 
-const deleteArticle = async (req, res) => {
+exports.deleteArticle = async (req, res) => {
   try {
     const deletedArticle = await articleService.deleteArticle(req.params.id);
     res.json(deletedArticle);
@@ -48,22 +48,12 @@ const deleteArticle = async (req, res) => {
   }
 };
 
-const searchArticles = async (req, res) => {
+exports.searchArticles = async (req, res) => {
   try {
-    const query = req.query.q; 
+    const query = req.query.q;
     const articles = await articleService.searchArticles(query);
     res.json(articles);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-};
-
-
-module.exports = {
-  getAllArticles,
-  getArticleById,
-  createArticle,
-  updateArticle,
-  deleteArticle,
-  searchArticles
 };

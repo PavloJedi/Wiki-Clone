@@ -10,7 +10,7 @@ export const createArticle = async (title, content) => {
 };
 
 export const updateArticle = async (id, article) => {
-  const { data } = await API.patch(`api/articles/${id}`, article);
+  const { data } = await API.patch(`/api/articles/${id}`, article);
   return data;
 };
 

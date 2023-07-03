@@ -15,6 +15,7 @@ import NotFound from "../pages/NotFound/NotFoundPage";
 import Layout from "../components/Layout/Layout";
 import Loader from "../components/Loader/Loader";
 import AddArticleForm from "../components/Articles/AddArticleForm/AddArticleForm";
+import EditArticleForm from "../components/Articles/EditArticleForm/EditArticleForm";
 
 const AppRouter = () => {
   return (
@@ -23,8 +24,9 @@ const AppRouter = () => {
         <Route path="/app" element={<PrivateRoute />}>
           <Route element={<Layout />}>
             <Route index element={<HomePage />} />
-            <Route path="article/:id" element={<ArticlePage />} />
             <Route path="add-article" element={<AddArticleForm />} />
+            <Route path="article/:id" element={<ArticlePage />} />
+            <Route path="article/:id/edit" element={<EditArticleForm />} />
           </Route>
         </Route>
         <Route path="/registration" element={<RegistrationPage />} />

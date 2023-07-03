@@ -1,6 +1,6 @@
-const userService = require("../services/UserService");
+const AuthService = require("../services/AuthService");
 
-const getAllUsers = async (req, res) => {
+exports.getAllUsers = async (req, res) => {
   try {
     const users = await userService.getAllUsers();
     res.json(users);
@@ -9,7 +9,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const getUserById = async (req, res) => {
+exports.getUserById = async (req, res) => {
   try {
     const user = await userService.getUserById(req.params.id);
     res.json(user);
@@ -18,7 +18,7 @@ const getUserById = async (req, res) => {
   }
 };
 
-const createUser = async (req, res) => {
+exports.createUser = async (req, res) => {
   try {
     const user = await userService.createUser(req.body);
     res.status(201).json(user);
@@ -27,7 +27,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {
+exports.updateUser = async (req, res) => {
   try {
     const updatedUser = await userService.updateUser(req.params.id, req.body);
     const token = createToken(user.email);
@@ -37,19 +37,11 @@ const updateUser = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+exports.deleteUser = async (req, res) => {
   try {
     const deletedUser = await userService.deleteUser(req.params.id);
     res.json(deletedUser);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
-};
-
-module.exports = {
-  getAllUsers,
-  getUserById,
-  createUser,
-  updateUser,
-  deleteUser,
 };

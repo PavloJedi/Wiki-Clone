@@ -10,7 +10,7 @@ router.get("/:id", articleController.getArticleById);
 
 router.post("/", articleController.createArticle);
 
-router.put("/:id", articleController.updateArticle);
+router.patch("/:id", articleController.updateArticle);
 
 router.delete("/:id", articleController.deleteArticle);
 
