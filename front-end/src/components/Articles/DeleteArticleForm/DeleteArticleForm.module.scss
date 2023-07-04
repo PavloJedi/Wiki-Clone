@@ -1,0 +1,45 @@
+.customModalOverlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.customModalContent {
+  width: 400px;
+  background-color: #ffffff54;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.modalTitle {
+  margin-bottom: 10px;
+}
+
+.modalText {
+  margin-bottom: 20px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.confirmButton {
+  margin-right: 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancelButton {
+  background-color: #bdbdbd;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
