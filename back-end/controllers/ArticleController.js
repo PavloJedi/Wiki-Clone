@@ -57,3 +57,13 @@ exports.searchArticles = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.getReport = async (req, res) => {
+  try {
+    const { startDate, endDate } = req.query;
+    const report = await articleService.getReport(startDate, endDate);
+    res.json(report);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

@@ -6,6 +6,8 @@ router.get('/search', articleController.searchArticles);
 
 router.get("/", articleController.getAllArticles);
 
+router.get("/report", articleController.getReport);
+
 router.get("/:id", articleController.getArticleById);
 
 router.post("/", articleController.createArticle);

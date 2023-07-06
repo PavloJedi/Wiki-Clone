@@ -5,7 +5,12 @@ exports.getAllArticles = async () => {
 };
 
 exports.createArticle = async (articleData) => {
-  return await ArticleModel.create(articleData);
+  const article = await ArticleModel.create(articleData);
+  const populatedArticle = await ArticleModel.findById(article._id).populate(
+    "author",
+    "name"
+  );
+  return populatedArticle;
 };
 
 exports.getArticleById = async (id) => {
@@ -24,6 +29,43 @@ exports.deleteArticle = async (id) => {
 };
 
 exports.searchArticles = async (query) => {
-  return await ArticleModel.find({ title: { $regex: query, $options: 'i' } });
+  return await ArticleModel.find({ title: { $regex: query, $options: "i" } });
 };
 
+exports.getReport = async (startDate, endDate) => {
+  startDate = new Date(startDate);
+  endDate = new Date(endDate);
+
+  const articleCount = await ArticleModel.find({
+    createdAt: { $gte: startDate, $lte: endDate },
+  }).countDocuments();
+
+  const topAuthors = await ArticleModel.aggregate([
+    {
+      $match: {
+        createdAt: { $gte: startDate, $lte: endDate },
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "author",
+        foreignField: "_id",
+        as: "authorData",
+      },
+    },
+    {
+      $unwind: "$authorData",
+    },
+    {
+      $group: {
+        _id: "$authorData._id",
+        name: { $first: "$authorData.name" },
+      },
+    },
+    { $sort: { count: -1 } },
+    { $limit: 5 },
+  ]);
+
+  return { articleCount, topAuthors };
+};
