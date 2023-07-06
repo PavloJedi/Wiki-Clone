@@ -1,8 +1,12 @@
 import API from "../API";
 
-export const createArticle = async (title, content) => {
+export const createArticle = async (title, content, authorId) => {
   try {
-    const response = await API.post("/api/articles", { title, content });
+    const response = await API.post("/api/articles", {
+      title,
+      content,
+      author: authorId,
+    });
     return response.data;
   } catch (error) {
     throw new Error("Failed to create article");
@@ -45,5 +49,17 @@ export const getArticles = async () => {
     return response.data;
   } catch (error) {
     throw new Error("Failed to fetch articles: " + error.message);
+  }
+};
+
+export const getReport = async (startDate, endDate) => {
+  try {
+    const response = await API.get("/api/articles/report", {
+      params: { startDate, endDate },
+    });
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed fetch article report" + error.message);
   }
 };

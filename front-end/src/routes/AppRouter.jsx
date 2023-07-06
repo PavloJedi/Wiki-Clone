@@ -7,6 +7,7 @@ import PrivateRoute from "./PrivateRoute";
 // Pages
 import HomePage from "../pages/HomePage/HomePage";
 import ArticlePage from "../pages/ArticlePage/ArticlePage";
+import ReportPage from "../pages/ReportPage/ReportPage";
 import RegistrationPage from "../pages/RegistrationPage/RegistrationPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import NotFound from "../pages/NotFound/NotFoundPage";
@@ -27,6 +28,7 @@ const AppRouter = () => {
             <Route path="add-article" element={<AddArticleForm />} />
             <Route path="article/:id" element={<ArticlePage />} />
             <Route path="article/:id/edit" element={<EditArticleForm />} />
+            <Route path="report" element={<ReportPage />} />
           </Route>
         </Route>
         <Route path="/registration" element={<RegistrationPage />} />

@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addArticle } from "../../../reducers/articleReducer";
 import { createArticle } from "../../../services/articlesService";
+
+//context
+import { CurrentUserContext } from "../../../context/AppProvider";
 
 //styles
 import styles from "./AddArticleForm.module.scss";
 
 const AddArticleForm = () => {
+  const { currentUser } = useContext(CurrentUserContext);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const dispatch = useDispatch();
@@ -14,8 +18,7 @@ const AddArticleForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const article = await createArticle(title, text);
-      console.log(article);
+      const article = await createArticle(title, text, currentUser.user._id);
       dispatch(addArticle(article));
       setTitle("");
       setText("");
