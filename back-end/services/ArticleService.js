@@ -36,9 +36,31 @@ exports.getReport = async (startDate, endDate) => {
   startDate = new Date(startDate);
   endDate = new Date(endDate);
 
-  const articleCount = await ArticleModel.find({
-    createdAt: { $gte: startDate, $lte: endDate },
-  }).countDocuments();
+  const dailyArticleCounts = await ArticleModel.aggregate([
+    {
+      $match: {
+        createdAt: { $gte: startDate, $lte: endDate },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          $dateToString: {
+            format: "%Y-%m-%d",
+            date: "$createdAt",
+          },
+        },
+        count: {
+          $sum: 1,
+        },
+      },
+    },
+    {
+      $sort: {
+        _id: 1,
+      },
+    },
+  ]);
 
   const topAuthors = await ArticleModel.aggregate([
     {
@@ -61,11 +83,12 @@ exports.getReport = async (startDate, endDate) => {
       $group: {
         _id: "$authorData._id",
         name: { $first: "$authorData.name" },
+        count: { $sum: 1 },
       },
     },
     { $sort: { count: -1 } },
     { $limit: 5 },
   ]);
 
-  return { articleCount, topAuthors };
+  return { dailyArticleCounts, topAuthors };
 };

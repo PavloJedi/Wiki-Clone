@@ -88,7 +88,7 @@ const RegistrationPage = () => {
       };
       const response = await authService.registration(user);
       console.log(response);
-      navigate.push("/login");
+      navigate("/login");
     } catch (error) {
       if (
         error.response &&
@@ -163,6 +163,7 @@ const RegistrationPage = () => {
                   onChange={handleChange}
                   placeholder="Password"
                   autoComplete="off"
+                  maxLength={10}
                   required
                 />
                 <FaLock className={styles.icon} />

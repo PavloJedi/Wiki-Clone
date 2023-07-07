@@ -46,12 +46,30 @@ const ReportPage = () => {
     fetchReport();
   }, []);
 
+  const generateLast30Days = () => {
+    const result = [];
+    for (let i = 0; i < 30; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      result.push(d.toISOString().split("T")[0]);
+    }
+    return result.reverse();
+  };
+
+  const labels = generateLast30Days();
+  const articleCounts = labels.map((label) => {
+    const articleCount = reportData?.dailyArticleCounts.find(
+      (ac) => ac._id === label
+    );
+    return articleCount ? articleCount.count : 0;
+  });
+
   const articleData = {
-    labels: [...Array(30).keys()].map((i) => `Day ${i + 1}`),
+    labels,
     datasets: [
       {
         label: "Articles in Last 30 Days",
-        data: reportData?.dailyArticleCounts,
+        data: articleCounts,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         fill: false,
@@ -72,9 +90,22 @@ const ReportPage = () => {
     ],
   };
 
+  console.log(reportData?.topAuthors);
+  console.log(reportData);
+
   const options = {
     responsive: true,
     plugins: {
+      tooltip: {
+        callbacks: {
+          title: (context) => {
+            return `Count: ${context[0].formattedValue}`;
+          },
+          label: (context) => {
+            return `Author: ${context.label}`;
+          },
+        },
+      },
       legend: {
         labels: {
           color: "white",
