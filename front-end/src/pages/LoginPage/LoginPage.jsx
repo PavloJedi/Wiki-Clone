@@ -116,6 +116,11 @@ const LoginPage = () => {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
+            {isError && (
+              <div className={styles.errorMessage}>
+                Login failed. Please try again.
+              </div>
+            )}
             <button
               type="submit"
               className={styles.loginButton}
