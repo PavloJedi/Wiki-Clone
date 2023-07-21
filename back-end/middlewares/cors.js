@@ -1,10 +1,9 @@
-require("dotenv").config();
-
 module.exports = (req, res, next) => {
-  const { origin } = req.headers.origin;
+  const origin = req.headers.origin;
 
-  if (process.env.ALLOWED_ORIGINS.indexOf(origin) !== -1) {
+  if (process.env.ALLOWED_ORIGINS.split(",").indexOf(origin) !== -1) {
     res.setHeader("Access-Control-Allow-Origin", origin);
+    res.header("Access-Control-Allow-Credentials", true);
   }
 
   res.header(

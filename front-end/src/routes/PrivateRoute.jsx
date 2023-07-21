@@ -4,16 +4,18 @@ import { Outlet, Navigate } from "react-router-dom";
 // Context
 import { CurrentUserContext } from "../context/AppProvider";
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = () => {
   const { isAuthenticated, isLoading } = useContext(CurrentUserContext);
 
-  if (!isLoading) {
-    return isAuthenticated ? (
-      children || <Outlet />
-    ) : (
-      <Navigate to={"/login"} />
-    );
+  if (isLoading) {
+    return null;  // return null while checking the auth status
   }
+
+  return isAuthenticated ? (
+    <Outlet />
+  ) : (
+    <Navigate to={"/login"} />
+  );
 };
 
 export default PrivateRoute;

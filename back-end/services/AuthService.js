@@ -1,28 +1,7 @@
 const bcrypt = require("bcrypt");
-const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const UserModel = require("../models/UserModel");
 const { generateToken } = require("../config/passport-config");
-
-// Configure local strategy
-passport.use(
-  new LocalStrategy(
-    { usernameField: "email" },
-    async (email, password, done) => {
-      try {
-        const user = await UserModel.findOne({ email });
-
-        if (!user || !user.comparePassword(password)) {
-          return done(null, false, { message: "Invalid email or password" });
-        }
-
-        return done(null, user);
-      } catch (error) {
-        return done(error);
-      }
-    }
-  )
-);
 
 exports.registerUser = async (userData) => {
   const { name, email, password } = userData;
