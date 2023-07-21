@@ -9,7 +9,7 @@ export const CurrentUserContext = createContext();
 const AppProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState({});
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token"));
 
   const fetchUser = useCallback(async () => {
     try {
@@ -20,6 +20,8 @@ const AppProvider = ({ children }) => {
         setCurrentUser(updatedUser);
         setIsLoading(false);
         setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
       }
     } catch (error) {
       console.error(error);

@@ -6,7 +6,8 @@ import { CurrentUserContext } from "../../context/AppProvider";
 import { authService } from "../../services/authService";
 
 const Navbar = () => {
-  const { isAuthenticated } = useContext(CurrentUserContext);
+  const { isAuthenticated } =
+    useContext(CurrentUserContext);
 
   const handleLogout = () => {
     authService.logout();

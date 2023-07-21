@@ -51,13 +51,11 @@ const LoginPage = () => {
         email: data.email,
         password: data.password,
       };
-      const {
-        data: { token },
-      } = await authService.login(user);
-      if (token) {
+      const response = await authService.login(user);
+      if (response?.data?.token) {
         await fetchUser();
+        navigate("/app");
       }
-      navigate("/app");
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

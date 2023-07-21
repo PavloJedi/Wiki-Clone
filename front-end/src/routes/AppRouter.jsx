@@ -1,5 +1,5 @@
-import React, { Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { Suspense, useContext } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 // Private route
 import PrivateRoute from "./PrivateRoute";
@@ -18,10 +18,25 @@ import Loader from "../components/Loader/Loader";
 import AddArticleForm from "../components/Articles/AddArticleForm/AddArticleForm";
 import EditArticleForm from "../components/Articles/EditArticleForm/EditArticleForm";
 
+// Context
+import { CurrentUserContext } from "../context/AppProvider";
+
 const AppRouter = () => {
+  const { isAuthenticated } = useContext(CurrentUserContext);
+
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
+        <Route
+          index
+          element={
+            isAuthenticated ? (
+              <Navigate to="/app" />
+            ) : (
+              <Navigate to="/registration" />
+            )
+          }
+        />
         <Route path="/app" element={<PrivateRoute />}>
           <Route element={<Layout />}>
             <Route index element={<HomePage />} />

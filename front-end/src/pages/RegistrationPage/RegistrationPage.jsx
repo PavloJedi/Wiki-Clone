@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { authService } from "../../services/authService";
+import { CurrentUserContext } from "../../context/AppProvider";
 
 //icons
 import {
@@ -17,6 +18,8 @@ import Loader from "../../components/Loader/Loader";
 import styles from "./RegistrationPage.module.scss";
 
 const RegistrationPage = () => {
+  const { fetchUser } = useContext(CurrentUserContext);
+
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -86,8 +89,8 @@ const RegistrationPage = () => {
         email: data.email,
         password: data.password,
       };
-      const response = await authService.registration(user);
-      console.log(response);
+      await authService.registration(user);
+      await fetchUser();
       navigate("/login");
     } catch (error) {
       if (
