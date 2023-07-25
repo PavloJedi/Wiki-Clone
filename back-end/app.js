@@ -36,4 +36,5 @@ app.use((req, res, next) => {
 app.listen(port, () => {
   connectDB();
   console.log(`Server has been started on port ${port}`);
+  console.log('deployed on heroku');
 });
