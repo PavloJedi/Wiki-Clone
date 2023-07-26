@@ -3,8 +3,15 @@ import axios from "axios";
 // Services
 import { tokenService } from "./services/tokenService";
 
-export const API_URL = "http://localhost:5000";
-export const URL = "http://localhost:3000";
+let modeUrl;
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  modeUrl = 'http://localhost:5000';
+} else {
+  modeUrl = 'https://wikiclone-7fd770fca0f7.herokuapp.com/'; 
+}
+
+export const API_URL = modeUrl;
+export const URL = 'http://localhost:3000'; 
 
 const API = axios.create({
   baseURL: API_URL,
@@ -12,6 +19,7 @@ const API = axios.create({
     "Content-Type": "application/json",
   },
 });
+
 const addAuthHeaders = async (config) => {
   const token = tokenService.getToken();
   if (token) {
