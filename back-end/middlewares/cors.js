@@ -3,7 +3,9 @@ require("dotenv").config();
 module.exports = (req, res, next) => {
   const { origin } = req.headers;
 
-  if (process.env.ALLOWED_ORIGINS.indexOf(origin) !== -1) {
+  const allowedOrigins = process.env.ALLOWED_ORIGINS.split(",");
+
+  if (allowedOrigins.indexOf(origin) !== -1) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   }
 
