@@ -1,17 +1,18 @@
-import React, { useState, useMemo, useContext } from "react";
+import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { authService } from "../../services/authService";
-import { CurrentUserContext } from "../../context/AppProvider";
+import { authService } from "../../../services/authService";
+import { useDispatch } from "react-redux";
+import { fetchUser } from "../../../redux/slices/userSlice";
 
 // Icons
 import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 
 // Styles
 import styles from "./LoginPage.module.scss";
-import Loader from "../../components/Loader/Loader";
+import Loader from "../../../components/Loader/Loader";
 
 const LoginPage = () => {
-  const { fetchUser } = useContext(CurrentUserContext);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -53,7 +54,7 @@ const LoginPage = () => {
       };
       const response = await authService.login(user);
       if (response?.data?.token) {
-        await fetchUser();
+        await dispatch(fetchUser());
         navigate("/app");
       }
       setIsLoading(false);

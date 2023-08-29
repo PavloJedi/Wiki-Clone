@@ -1,6 +1,6 @@
 import React from "react";
-import Logo from "../../components/Logo/Logo";
-import SearchBar from "../../components/SearchBar/SearchBar";
+import Logo from "../../../components/Logo/Logo";
+import SearchBar from "../../../components/SearchBar/SearchBar";
 import styles from "./HomePage.module.scss";
 
 const HomePage = () => {

@@ -1,16 +1,17 @@
-import React, { Suspense, useContext } from "react";
+import React, { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux"; // Import useSelector
 
 // Private route
 import PrivateRoute from "./PrivateRoute";
 
 // Pages
-import HomePage from "../pages/HomePage/HomePage";
-import ArticlePage from "../pages/ArticlePage/ArticlePage";
-import ReportPage from "../pages/ReportPage/ReportPage";
-import RegistrationPage from "../pages/RegistrationPage/RegistrationPage";
-import LoginPage from "../pages/LoginPage/LoginPage";
-import NotFound from "../pages/NotFound/NotFoundPage";
+import HomePage from "../views/pages/HomePage/HomePage";
+import ArticlePage from "../views/pages/ArticlePage/ArticlePage";
+import ReportPage from "../views/pages/ReportPage/ReportPage";
+import RegistrationPage from "../views/pages/RegistrationPage/RegistrationPage";
+import LoginPage from "../views/pages/LoginPage/LoginPage";
+import NotFound from "../views/pages/NotFound/NotFoundPage";
 
 // Components
 import Layout from "../components/Layout/Layout";
@@ -18,12 +19,8 @@ import Loader from "../components/Loader/Loader";
 import AddArticleForm from "../components/Articles/AddArticleForm/AddArticleForm";
 import EditArticleForm from "../components/Articles/EditArticleForm/EditArticleForm";
 
-// Context
-import { CurrentUserContext } from "../context/AppProvider";
-
 const AppRouter = () => {
-  const { isAuthenticated } = useContext(CurrentUserContext);
-
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated); 
   return (
     <Suspense fallback={<Loader />}>
       <Routes>

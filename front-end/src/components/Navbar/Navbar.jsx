@@ -1,13 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import styles from "./Navbar.module.scss";
 import { FaMoon, FaBars, FaUser, FaSignOutAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { CurrentUserContext } from "../../context/AppProvider";
+import { useSelector } from "react-redux";
 import { authService } from "../../services/authService";
 
 const Navbar = () => {
-  const { isAuthenticated } =
-    useContext(CurrentUserContext);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   const handleLogout = () => {
     authService.logout();

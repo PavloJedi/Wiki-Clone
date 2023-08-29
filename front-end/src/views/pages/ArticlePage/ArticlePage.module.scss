@@ -1,6 +1,10 @@
 .articleBox {
   padding-top: 20px;
   width: 100%;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
 }
 
 .articleWrap {
@@ -10,6 +14,10 @@
   align-items: center;
   flex-direction: column;
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 }
 
 .articleTitle {
@@ -22,6 +30,11 @@
   gap: 1rem;
   flex-direction: column;
   align-items: end;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+  }
 
   svg {
     cursor: pointer;

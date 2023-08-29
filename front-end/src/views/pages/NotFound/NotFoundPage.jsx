@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 // Assets
-import notFound from "../../assets/notFound.svg";
+import notFound from "../../../assets/notFound.svg";
 
 // Styles
 import styles from "./NotFound.module.scss";

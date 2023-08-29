@@ -1,21 +1,18 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import AppRouter from "./routes/AppRouter";
 
-//Context
-import { CurrentUserContext } from "./context/AppProvider";
+// Redux action
+import { fetchUser } from "./redux/slices/userSlice";
 
 const App = () => {
-  const { fetchUser } = useContext(CurrentUserContext);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
+    dispatch(fetchUser());
+  }, [dispatch]);
 
-  return (
-    <>
-      <AppRouter />
-    </>
-  );
+  return <AppRouter />;
 };
 
 export default App;

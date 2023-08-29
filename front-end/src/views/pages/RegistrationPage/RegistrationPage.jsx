@@ -1,7 +1,6 @@
-import React, { useState, useMemo, useContext } from "react";
+import React, { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { authService } from "../../services/authService";
-import { CurrentUserContext } from "../../context/AppProvider";
+import { authService } from "../../../services/authService";
 
 //icons
 import {
@@ -13,13 +12,15 @@ import {
   FaEyeSlash,
 } from "react-icons/fa";
 
-import { REGEX_EMAIL, REGEX_NAME, REGEX_PASSWORD } from "../../helpers/regex";
-import Loader from "../../components/Loader/Loader";
+import {
+  REGEX_EMAIL,
+  REGEX_NAME,
+  REGEX_PASSWORD,
+} from "../../../helpers/regex";
+import Loader from "../../../components/Loader/Loader";
 import styles from "./RegistrationPage.module.scss";
 
 const RegistrationPage = () => {
-  const { fetchUser } = useContext(CurrentUserContext);
-
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -90,7 +91,6 @@ const RegistrationPage = () => {
         password: data.password,
       };
       await authService.registration(user);
-      await fetchUser();
       navigate("/login");
     } catch (error) {
       if (

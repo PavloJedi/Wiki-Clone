@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 //service
-import { getReport } from "../../services/articlesService";
+import { getReport } from "../../../services/articlesService";
 
 //styles
 import styles from "./ReportPage.module.scss";

@@ -4,14 +4,14 @@ import axios from "axios";
 import { tokenService } from "./services/tokenService";
 
 let modeUrl;
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  modeUrl = 'http://localhost:5000';
+if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+  modeUrl = "http://localhost:5000";
 } else {
-  modeUrl = 'https://wikiclone-7fd770fca0f7.herokuapp.com/'; 
+  modeUrl = "https://wiki-clone.onrender.com/";
 }
 
 export const API_URL = modeUrl;
-export const URL = 'http://localhost:3000'; 
+export const URL = "http://localhost:3000";
 
 const API = axios.create({
   baseURL: API_URL,

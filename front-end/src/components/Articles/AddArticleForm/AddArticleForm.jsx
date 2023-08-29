@@ -1,16 +1,13 @@
-import React, { useContext, useState } from "react";
-import { useDispatch } from "react-redux";
-import { addArticle } from "../../../reducers/articleReducer";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addArticle } from "../../../redux/slices/articleSlice";
 import { createArticle } from "../../../services/articlesService";
-
-//context
-import { CurrentUserContext } from "../../../context/AppProvider";
 
 //styles
 import styles from "./AddArticleForm.module.scss";
 
 const AddArticleForm = () => {
-  const { currentUser } = useContext(CurrentUserContext);
+  const currentUser = useSelector((state) => state.user.currentUser);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const dispatch = useDispatch();

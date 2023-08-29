@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { updateArticle } from "../../../services/articlesService";
 import { Editor, EditorState, ContentState } from "draft-js";
-import styles from "../../../pages/ArticlePage/ArticlePage.module.scss";
+import styles from "../../../views/pages/ArticlePage/ArticlePage.module.scss";
 
 const EditArticleForm = ({ idString, article, setEditing, setArticle }) => {
   const [editorState, setEditorState] = useState(() =>

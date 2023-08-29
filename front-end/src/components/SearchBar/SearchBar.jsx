@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
+import { debounce } from "lodash";
+
+//service
 import { searchArticles } from "../../services/articlesService";
 
 // Styles
@@ -12,9 +15,9 @@ const SearchBar = () => {
   const [suggestions, setSuggestions] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (searchQuery !== "") {
-      searchArticles(searchQuery).then(
+  const debouncedSearch = useCallback(
+    debounce((query) => {
+      searchArticles(query).then(
         (articles) => {
           setSuggestions(articles);
         },
@@ -22,10 +25,20 @@ const SearchBar = () => {
           console.error("Failed to search articles:", error);
         }
       );
+    }, 1000),
+    []
+  );
+
+  useEffect(() => {
+    if (searchQuery !== "") {
+      debouncedSearch(searchQuery);
     } else {
       setSuggestions([]);
     }
-  }, [searchQuery]);
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch, searchQuery]);
 
   const handleInputChange = (newValue) => {
     setSearchQuery(newValue);

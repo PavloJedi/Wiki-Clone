@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
-import { getArticleById } from "../../services/articlesService";
+import { getArticleById } from "../../../services/articlesService";
 import { useParams } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
 import styles from "./ArticlePage.module.scss";
-import { CurrentUserContext } from "../../context/AppProvider";
-import EditArticleForm from "../../components/Articles/EditArticleForm/EditArticleForm";
-import DeleteArticleForm from "../../components/Articles/DeleteArticleForm/DeleteArticleForm";
+import { useSelector } from "react-redux";
+import EditArticleForm from "../../../components/Articles/EditArticleForm/EditArticleForm";
+import DeleteArticleForm from "../../../components/Articles/DeleteArticleForm/DeleteArticleForm";
 
 const ArticlePage = () => {
-  const { isAuthenticated } = useContext(CurrentUserContext);
+  const { isAuthenticated } = useSelector((state) => state.user);
   const { id: idString } = useParams();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getArticles } from "../services/articlesService";  
+import { getArticles } from "../../services/articlesService";  
 
 export const fetchArticles = createAsyncThunk("articles/fetchAll", async () => {
   const response = await getArticles();
