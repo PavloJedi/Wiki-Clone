@@ -31,7 +31,7 @@ const RegistrationPage = () => {
 
   const [hasError, setHasError] = useState({
     hasMessageError: false,
-    hasNameError: false,
+    hasNameError: "",
     hasEmailError: false,
     hasPasswordError: false,
   });
@@ -53,6 +53,8 @@ const RegistrationPage = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
+  const CYRILLIC_PATTERN = /[а-яёА-ЯЁ]/;
+
   const isDisabledBtn = useMemo(
     () =>
       !data.name.trim().length ||
@@ -62,9 +64,16 @@ const RegistrationPage = () => {
   );
 
   const checkValidation = () => {
+    const isCyrillic = CYRILLIC_PATTERN.test(data.name);
+    const isValidName = REGEX_NAME.test(data.name);
+
     const errors = {
       hasMessageError: false,
-      hasNameError: !REGEX_NAME.test(data.name),
+      hasNameError: isCyrillic
+        ? "No Cyrillic allowed"
+        : !isValidName
+        ? "Enter valid name and surname"
+        : "",
       hasEmailError: !REGEX_EMAIL.test(data.email),
       hasPasswordError: !REGEX_PASSWORD.test(data.password),
     };
@@ -130,7 +139,7 @@ const RegistrationPage = () => {
               {hasError.hasNameError && (
                 <div className={styles.errorMessage}>
                   <FaExclamationTriangle />
-                  <span>Please enter a valid name</span>
+                  <span>{hasError.hasNameError}</span>
                 </div>
               )}
             </div>
