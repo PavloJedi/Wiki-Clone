@@ -8,6 +8,7 @@ import PopupMenu from "../PopupMenu/PopupMenu";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const [darkTheme, setDarkTheme] = useState(true);
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   const handleLogout = () => {
@@ -19,12 +20,17 @@ const Navbar = () => {
     setShowMenu((prevShowMenu) => !prevShowMenu);
   };
 
+  const toggleTheme = () => {
+    setDarkTheme((prevTheme) => !prevTheme);
+    document.body.setAttribute("data-theme", darkTheme ? "dark" : "light");
+  };
+
   return (
     <nav className={styles.navbar}>
       <Link to="#" className={styles.navbar__link}>
         English
       </Link>
-      <Link to="#" className={styles.navbar__link}>
+      <Link to="#" className={styles.navbar__link} onClick={toggleTheme}>
         <FaMoon />
       </Link>
       <Link to="#" className={styles.navbar__link} onClick={toggleMenu}>

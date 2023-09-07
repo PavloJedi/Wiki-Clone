@@ -1,3 +1,19 @@
+/* Default (black) theme */
+:root {
+  --color-bg: black;
+  --color-text: white;
+  --color-text-rgb: 255, 255, 255;
+  --color-border: rgba(255, 255, 255, 0.5);
+}
+
+/* Light theme */
+body[data-theme="light"] {
+  --color-bg: white;
+  --color-text: black;
+  --color-text-rgb: 0, 0, 0;
+  --color-border: black;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -11,13 +27,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #ffffff;
-  background-color: black;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 footer {
   background: rgba(255, 255, 255, 0.03) !important;
   backdrop-filter: blur(25px) !important;
+  color: var(--color-text);
 }
 
 code {
@@ -25,9 +42,10 @@ code {
     monospace;
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+  color: var(--color-text);
 }
 
 a {
-  color: #ffffff;
+  color: var(--color-text);
   text-decoration: none;
 }

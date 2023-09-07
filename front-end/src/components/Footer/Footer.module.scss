@@ -1,6 +1,6 @@
 .footer {
-  background-color: #c4c4c4;
-  color: #fff;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -43,7 +43,7 @@
   font-size: 12px;
   line-height: 160%;
   letter-spacing: 0.0024em;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(var(--color-text-rgb), 0.5);
   margin-right: 10px;
 }
 

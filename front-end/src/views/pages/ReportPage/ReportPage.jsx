@@ -64,14 +64,21 @@ const ReportPage = () => {
     return articleCount ? articleCount.count : 0;
   });
 
+  const textColor = getComputedStyle(document.documentElement)
+    .getPropertyValue("--color-text")
+    .trim();
+  const textRgb = getComputedStyle(document.documentElement)
+    .getPropertyValue("--color-text-rgb")
+    .trim();
+
   const articleData = {
     labels,
     datasets: [
       {
         label: "Articles in Last 30 Days",
         data: articleCounts,
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: textColor,
+        backgroundColor: `rgba(${textRgb}, 0.5)`,
         fill: false,
       },
     ],
@@ -90,9 +97,6 @@ const ReportPage = () => {
     ],
   };
 
-  console.log(reportData?.topAuthors);
-  console.log(reportData);
-
   const options = {
     responsive: true,
     plugins: {
@@ -108,23 +112,23 @@ const ReportPage = () => {
       },
       legend: {
         labels: {
-          color: "white",
+          color: textColor,
         },
       },
       title: {
         display: true,
-        color: "white",
+        color: textColor,
       },
     },
     scales: {
       x: {
         ticks: {
-          color: "white",
+          color: textColor,
         },
       },
       y: {
         ticks: {
-          color: "white",
+          color: textColor,
         },
       },
     },
@@ -132,7 +136,7 @@ const ReportPage = () => {
 
   if (loading) {
     return (
-      <div style={{ textAlign: "center", color: "white" }}>Loading...</div>
+      <div style={{ textAlign: "center", color: textColor }}>Loading...</div>
     );
   }
 

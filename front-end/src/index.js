@@ -8,10 +8,13 @@ import { Provider } from "react-redux";
 import store from "./redux/store/store";
 import ReactModal from "react-modal";
 
-// Add this line to set the app element
+
 ReactModal.setAppElement("#root");
 
 const root = createRoot(document.getElementById("root"));
+
+document.body.setAttribute('data-theme', 'dark'); 
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>

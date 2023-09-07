@@ -18,13 +18,15 @@
 .input {
   padding: 10px;
   border: none;
+  border: 1px solid var(--color-border);
+  border-bottom: none;
 }
 
 .textarea {
   padding: 10px;
   margin-bottom: 15px;
   height: 200px;
-  border: none;
+  border: 1px solid var(--color-border);
 }
 
 .button {

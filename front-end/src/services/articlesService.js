@@ -57,7 +57,6 @@ export const getReport = async (startDate, endDate) => {
     const response = await API.get("/api/articles/report", {
       params: { startDate, endDate },
     });
-    console.log(response);
     return response.data;
   } catch (error) {
     throw new Error("Failed fetch article report" + error.message);

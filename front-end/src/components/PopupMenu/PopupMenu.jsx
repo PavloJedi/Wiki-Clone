@@ -11,6 +11,9 @@ const PopupMenu = ({ onClose }) => {
       <Link to="/app/report" onClick={onClose}>
         Report
       </Link>
+      <Link to="/app" onClick={onClose}>
+        Home Page
+      </Link>
     </div>
   );
 };

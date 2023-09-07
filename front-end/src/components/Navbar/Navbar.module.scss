@@ -5,6 +5,8 @@
   padding: 24px 10px;
   gap: 32px;
   margin: 0 auto;
+  color: var(--color-text);
+
 
   @media (max-width: 768px) {
     justify-content: space-evenly;
@@ -12,12 +14,7 @@
 }
 
 .navbar__link {
-  color: #fff;
+  color: var(--color-text);
   margin-left: 10px;
   text-decoration: none;
-}
-
-.darkTheme {
-  background-color: black;
-  color: white;
 }

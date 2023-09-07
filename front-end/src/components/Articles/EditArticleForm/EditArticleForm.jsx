@@ -38,7 +38,6 @@ const EditArticleForm = ({ idString, article, setEditing, setArticle }) => {
         title: title.replace("Title: ", ""),
         content: content.join("\n\n"),
       };
-      console.log("Updating article with id: ", idString);
       await updateArticle(idString, updatedArticle);
       setArticle(updatedArticle);
       setEditing(false);

@@ -56,22 +56,23 @@ const SearchBar = () => {
     option: (provided) => ({
       ...provided,
       backgroundColor: "transparent",
-      color: "black",
+      color: "var(--color-text)",
     }),
     control: (provided) => ({
       ...provided,
       backgroundColor: "transparent",
       border: "none",
       boxShadow: "none",
+      color: "var(--color-text)",
     }),
     dropdownIndicator: (provided) => ({
       ...provided,
-      color: "black",
+      color: "var(--color-text)",
       backgroundColor: "transparent",
     }),
     input: (provided) => ({
       ...provided,
-      color: "white",
+      color: "var(--color-text)",
     }),
   };
 
