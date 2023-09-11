@@ -53,26 +53,38 @@ const SearchBar = () => {
   const formatOptionLabel = ({ title }) => <div>{title}</div>;
 
   const customStyles = {
-    option: (provided) => ({
+    option: (provided, state) => ({
       ...provided,
-      backgroundColor: "transparent",
+      backgroundColor: state.isSelected ? "var(--color-border)" : "transparent",
       color: "var(--color-text)",
+      cursor: "pointer",
+      "&:hover": {
+        backgroundColor: "rgba(var(--color-text-rgb), 0.1)",
+      },
     }),
     control: (provided) => ({
       ...provided,
       backgroundColor: "transparent",
-      border: "none",
+      border: "1px solid var(--color-border)",
       boxShadow: "none",
       color: "var(--color-text)",
     }),
     dropdownIndicator: (provided) => ({
       ...provided,
       color: "var(--color-text)",
-      backgroundColor: "transparent",
+      "&:hover": {
+        color: "var(--color-text)",
+      },
     }),
     input: (provided) => ({
       ...provided,
       color: "var(--color-text)",
+    }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: "var(--color-bg)",
+      border: "1px solid var(--color-border)",
+      borderRadius: "4px",
     }),
   };
 
