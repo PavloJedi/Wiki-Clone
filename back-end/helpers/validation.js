@@ -8,7 +8,7 @@ const schema = Joi.object({
     .regex(
       new RegExp("^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$")
     )
-    .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
+    .email({ minDomainSegments: 2, tlds: { allow: ["com", "net", "co"] } })
     .required(),
   password: Joi.string()
     .regex(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*?[0-9]).{8,10}$"))
