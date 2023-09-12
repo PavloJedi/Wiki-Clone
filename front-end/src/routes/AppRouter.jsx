@@ -30,7 +30,7 @@ const AppRouter = () => {
             isAuthenticated ? (
               <Navigate to="/app" />
             ) : (
-              <Navigate to="registration" />
+              <Navigate to="/registration" />
             )
           }
         />

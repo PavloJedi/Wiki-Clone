@@ -7,7 +7,7 @@ let modeUrl;
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
   modeUrl = "http://localhost:5000";
 } else {
-  modeUrl = "https://wiki-clone.onrender.com/";
+  modeUrl = "https://wiki-clone.onrender.com";
 }
 
 export const API_URL = modeUrl;
