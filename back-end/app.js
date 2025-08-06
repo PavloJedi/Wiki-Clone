@@ -12,7 +12,7 @@ const cors = require("./middlewares/cors");
 const sessionMiddleware = require("./middlewares/session");
 
 //DB
-const connectDB = require("./db");
+// const connectDB = require("./db");
 
 //Routers
 const appRouter = require("./routes/AppRouter");
@@ -34,6 +34,6 @@ app.use((req, res, next) => {
 });
 
 app.listen(port, () => {
-  connectDB();
+  // connectDB();
   console.log(`Server has been started on port ${port}`);
 });
